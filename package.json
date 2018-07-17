@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "./node_modules/.bin/eslint ."
   },
   "keywords": [],
   "author": "",
@@ -17,6 +18,7 @@
   "dependencies": {
     "eslint-config-prettier": "^2.9.0",
     "express": "^4.16.3",
+    "jest": "^23.4.1",
     "prettier": "^1.13.7",
     "redis": "^2.8.0"
   }
