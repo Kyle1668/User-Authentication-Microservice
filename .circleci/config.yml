@@ -7,14 +7,20 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install Dependencies
+          command: npm install
+      - run:
           name: Run Unit Tests
-          command: npm test
+          command: npm run test
 
   lint:
     docker:
       - image: circleci/node:7.10
     steps:
       - checkout
+      - run:
+          name: Install Dependencies
+          command: npm install
       - run:
           name: Run Eslint
           command: npm run lint
