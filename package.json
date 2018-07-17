@@ -1,0 +1,23 @@
+{
+  "name": "authentication_test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.13.0"
+  },
+  "dependencies": {
+    "eslint-config-prettier": "^2.9.0",
+    "express": "^4.16.3",
+    "prettier": "^1.13.7",
+    "redis": "^2.8.0"
+  }
+}
