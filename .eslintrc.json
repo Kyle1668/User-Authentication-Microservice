@@ -1,3 +1,6 @@
 {
-    "extends": ["prettier", "airbnb-base"]
+    "extends": ["airbnb-base", "prettier"],
+    "rules": {
+        "no-console": 0
+    }
 }
