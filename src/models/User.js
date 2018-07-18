@@ -1,14 +1,15 @@
-class User {
-	constructor(name, email, token) {
-		this.name = name;
-		this.email = email;
-		this.token = token;
-	}
+const { STRING } = require('sequelize');
+const { connection } = require('../db-connection');
 
-	isValidToken() {
-		const { token } = this;
-		return token !== null;
+const User = connection.define('users', {
+	email: {
+		type: STRING
+	},
+	password: {
+		type: STRING
 	}
-}
+});
 
-module.exports.User = User;
+connection.sync();
+
+module.exports = { User };
