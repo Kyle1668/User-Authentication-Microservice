@@ -1,8 +1,6 @@
-const inputValidation = (req, res, next) => {
-	console.log('Middleware Ran');
-	console.log(req.query);
-
+const inputValidationGET = (req, res, next) => {
 	if (req.query.email && req.query.password) {
+		console.log('inputValidation: Correct Parameters');
 		next();
 	} else {
 		res.json({
@@ -14,4 +12,4 @@ const inputValidation = (req, res, next) => {
 	}
 };
 
-module.exports.inputValidation = inputValidation;
+module.exports = { inputValidationGET };

@@ -1,5 +1,8 @@
 const express = require('express');
-const { inputValidation } = require('./middleware/input-validation');
+const bodyParser = require('body-parser');
+const { User } = require('./models/user');
+const { inputValidationGET } = require('./middleware/input-validation-get');
+const { inputValidationPOST } = require('./middleware/input-validation-post');
 const { testDBConnection } = require('./middleware/test-db-connection');
 
 const app = express();
@@ -9,10 +12,20 @@ const router = express.Router();
 const port = process.env.PORT || 3000;
 
 // Middleware
-app.use('/api', inputValidation, testDBConnection, router);
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use('/api', testDBConnection, router);
+app.use('/users', bodyParser.json(), router);
 
 // router.use(middleware.inputValidation)
-router.get('/', (req, res) => {
+router.get('/token', bodyParser.json(), inputValidationGET, (req, res) => {
+	res.json({ code: 200 });
+});
+
+router.post('/users', bodyParser.json(), inputValidationPOST, (req, res) => {
+    User.create({
+        email: req.body.email,
+        password: req.body.password
+    })
 	res.json({ code: 200 });
 });
 

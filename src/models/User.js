@@ -3,10 +3,13 @@ const { connection } = require('../db-connection');
 
 const User = connection.define('users', {
 	email: {
-		type: STRING
+        type: STRING,
+        unique: true,
+        allowNull: false
 	},
 	password: {
-		type: STRING
+        type: STRING,
+        allowNull: false
 	}
 });
 
