@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+  auth:
+    build: .
+    volumes: .
+    environment:
+      - PORT: 5000
+    depends_on:
+      - rabbitmq
+      - redis
+    links:
+      - rabbitmq
+      - redis
+
+  rabbitmq:
+    image: rabbitmq:3.7.3-management
+    container_name: rabbitmq-docker
+    ports:
+      - "15672:15672"
+
+  redis:
+    container_name: redis
+    image: redis
+    ports:
+      - "6379:6379"
