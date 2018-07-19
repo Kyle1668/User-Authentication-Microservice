@@ -3,8 +3,7 @@ const { User } = require('../models/user');
 const emailAlreadyExists = (postEmail) => {
 	return User.findAndCount({
 		where: {
-			email: postEmail,
-			limit: 1
+			email: postEmail
 		}
 	});
 };
@@ -45,4 +44,4 @@ const inputValidationPOST = (req, res, next) => {
 
 module.exports = { inputValidationPOST };
 
-// curl -X POST -H 'Content-Type: application/json' -d '{"email": "kyleobrien01@comcast.net", "password":"clipper"}' http://localhost:3000/api/users
+// curl -X POST -H 'Content-Type: application/json' -d '{"email": "kyle@gmail.com", "password":"clipper"}' http://localhost:3000/api/users

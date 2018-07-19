@@ -4,6 +4,7 @@ const { User } = require('./models/user');
 const { inputValidationGET } = require('./middleware/input-validation-get');
 const { inputValidationPOST } = require('./middleware/input-validation-post');
 const { testDBConnection } = require('./middleware/test-db-connection');
+const { testPasswordMatch } = require('./middleware/password-match');
 
 const app = express();
 const router = express.Router();
@@ -17,7 +18,7 @@ app.use('/api', testDBConnection, router);
 app.use('/users', bodyParser.json(), router);
 
 // router.use(middleware.inputValidation)
-router.get('/token', bodyParser.json(), inputValidationGET, (req, res) => {
+router.get('/token', bodyParser.json(), inputValidationGET, testPasswordMatch, (req, res) => {
 	res.json({ code: 200 });
 });
 
