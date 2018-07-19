@@ -1,3 +1,13 @@
+const { User } = require('../models/user');
+
+const emailAlreadyExists = (postEmail) => {
+	return User.findAndCount({
+		where: {
+			email: postEmail
+		}
+	});
+};
+
 const inputValidationPOST = (req, res, next) => {
 	if (req.body === {}) {
 		res.json({
@@ -17,9 +27,19 @@ const inputValidationPOST = (req, res, next) => {
 			error: true,
 			messge: 'Missing password.'
 		});
-	} else {
-		next();
 	}
+
+	emailAlreadyExists(req.body.email).then((result) => {
+		if (result.count !== 0) {
+			res.json({
+				code: 400,
+				error: true,
+				messge: 'Email already exists.'
+			});
+		} else {
+			next();
+		}
+	});
 };
 
 module.exports = { inputValidationPOST };

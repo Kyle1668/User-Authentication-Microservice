@@ -22,10 +22,10 @@ router.get('/token', bodyParser.json(), inputValidationGET, (req, res) => {
 });
 
 router.post('/users', bodyParser.json(), inputValidationPOST, (req, res) => {
-    User.create({
-        email: req.body.email,
-        password: req.body.password
-    })
+	User.create({
+		email: req.body.email,
+		password: req.body.password
+	});
 	res.json({ code: 200 });
 });
 
