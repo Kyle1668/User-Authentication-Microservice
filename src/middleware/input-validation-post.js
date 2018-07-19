@@ -3,7 +3,8 @@ const { User } = require('../models/user');
 const emailAlreadyExists = (postEmail) => {
 	return User.findAndCount({
 		where: {
-			email: postEmail
+			email: postEmail,
+			limit: 1
 		}
 	});
 };
