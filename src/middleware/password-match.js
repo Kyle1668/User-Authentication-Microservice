@@ -2,7 +2,9 @@ const { User } = require('../models/user');
 
 const getUser = (postEmail) => {
 	return User.findOne({
-		where: {}
+		where: {
+			email: postEmail
+		}
 	});
 };
 

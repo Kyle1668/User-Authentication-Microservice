@@ -9,7 +9,7 @@ const emailAlreadyExists = (postEmail) => {
 };
 
 const inputValidationPOST = (req, res, next) => {
-	if (req.body === {}) {
+	if (!('email' in req.body) && !('password' in req.body)) {
 		res.json({
 			code: 400,
 			error: true,
