@@ -9,7 +9,7 @@ const getUser = (postEmail) => {
 };
 
 const testPasswordMatch = (req, res, next) => {
-	return getUser(req.body.email).then((result) => {
+	return getUser(req.query.email).then((result) => {
 		const dbPass = result.dataValues.password;
 
 		if (req.query.password === dbPass) {

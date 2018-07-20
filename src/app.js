@@ -1,8 +1,9 @@
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const { User } = require('./models/user');
-const { testDBConnection } = require('./middleware/test-db-connection');
 const { redisConnection } = require('./redis-connection');
+const { testDBConnection } = require('./middleware/test-db-connection');
 const { inputValidationGET } = require('./middleware/input-validation-get');
 const { inputValidationPOST } = require('./middleware/input-validation-post');
 const { testPasswordMatch } = require('./middleware/password-match');
@@ -20,8 +21,33 @@ app.use('/users', bodyParser.json(), router);
 
 // router.use(middleware.inputValidation)
 router.get('/token', bodyParser.json(), inputValidationGET, testPasswordMatch, (req, res) => {
-	const token = 0;
-	res.json({ code: 200 });
+	jwt.sign({ email: req.query.email }, req.query.password, (jwtErr, jsonToken) => {
+		if (jwtErr) {
+			res.json({
+				code: 500,
+				error: true,
+				message: 'Error generating JWT.'
+			});
+		} else {
+			redisConnection
+				.setAsync(req.query.email, jsonToken, 'EX', 20)
+				.then(() => {
+					res.json({
+						code: 200,
+						error: false,
+						token: jsonToken
+					});
+				})
+				.catch((redisErr) => {
+					console.log(redisErr);
+					res.json({
+						code: 500,
+						error: true,
+						message: 'Error Saving JWT.'
+					});
+				});
+		}
+	});
 });
 
 router.post('/users', bodyParser.json(), inputValidationPOST, (req, res) => {
