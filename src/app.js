@@ -4,12 +4,12 @@ const { User } = require('./models/user');
 const { redisConnection } = require('./models/redis-connection');
 
 // Custom Middleware
-const { inputValidationPOST } = require('./middleware/input-validation-post');
-const { inputValidationGET } = require('./middleware/input-validation-get');
-const { testDBConnection } = require('./middleware/test-db-connection');
-const { testPasswordMatch } = require('./middleware/password-match');
-const { generateJWT } = require('./middleware/generate-jwt');
 const { saveJWT } = require('./middleware/save-jwt');
+const { generateJWT } = require('./middleware/generate-jwt');
+const { testPasswordMatch } = require('./middleware/password-match');
+const { testDBConnection } = require('./middleware/test-db-connection');
+const { inputValidationGET } = require('./middleware/input-validation-get');
+const { inputValidationPOST } = require('./middleware/input-validation-post');
 
 const app = express();
 const router = express.Router();
@@ -17,8 +17,8 @@ const router = express.Router();
 // Middleware
 app.use('/api', router);
 app.use(testDBConnection);
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Define API Port
 const port = process.env.PORT || 3000;
