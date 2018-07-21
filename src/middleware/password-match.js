@@ -13,7 +13,7 @@ const testPasswordMatch = (req, res, next) => {
 		const dbPass = result.dataValues.password;
 
 		if (req.query.password === dbPass) {
-			console.log('Correct Password');
+			console.log('MIDDLEWARE-PASSWORD-MATCH: Correct Password');
 			next();
 		} else {
 			res.json({

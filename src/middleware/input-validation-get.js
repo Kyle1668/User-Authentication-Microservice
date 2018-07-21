@@ -1,6 +1,6 @@
 const inputValidationGET = (req, res, next) => {
 	if (req.query.email && req.query.password) {
-		console.log('inputValidation: Correct Parameters');
+		console.log('MIDDLEWARE-INPUT-VALIDATION: Correct Parameters');
 		next();
 	} else {
 		res.json({

@@ -1,53 +1,33 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
 const bodyParser = require('body-parser');
 const { User } = require('./models/user');
 const { redisConnection } = require('./redis-connection');
-const { testDBConnection } = require('./middleware/test-db-connection');
-const { inputValidationGET } = require('./middleware/input-validation-get');
+
+// Custom Middleware
 const { inputValidationPOST } = require('./middleware/input-validation-post');
+const { inputValidationGET } = require('./middleware/input-validation-get');
+const { testDBConnection } = require('./middleware/test-db-connection');
 const { testPasswordMatch } = require('./middleware/password-match');
+const { generateJWT } = require('./middleware/generate-jwt');
+const { saveJWT } = require('./middleware/save-jwt');
 
 const app = express();
 const router = express.Router();
 
+// Middleware
+app.use('/api', router);
+app.use(testDBConnection);
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 // Define API Port
 const port = process.env.PORT || 3000;
 
-// Middleware
-// app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
-app.use(testDBConnection);
-app.use('/api', router);
-
-// router.use(middleware.inputValidation)
-router.get('/token', inputValidationGET, testPasswordMatch, (req, res) => {
-	jwt.sign({ email: req.query.email }, req.query.password, (jwtErr, jsonToken) => {
-		if (jwtErr) {
-			res.json({
-				code: 500,
-				error: true,
-				message: 'Error generating JWT.'
-			});
-		} else {
-			redisConnection
-				.setAsync(req.query.email, jsonToken, 'EX', 20)
-				.then(() => {
-					res.json({
-						code: 200,
-						error: false,
-						token: jsonToken
-					});
-				})
-				.catch((redisErr) => {
-					console.log(redisErr);
-					res.json({
-						code: 500,
-						error: true,
-						message: 'Error Saving JWT.'
-					});
-				});
-		}
+router.get('/token', inputValidationGET, testPasswordMatch, generateJWT, saveJWT, (req, res) => {
+	res.json({
+		code: 200,
+		error: false,
+		token: res.locals.token
 	});
 });
 
