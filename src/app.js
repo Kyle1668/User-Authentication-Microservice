@@ -36,7 +36,11 @@ router.post('/users', inputValidationPOST, (req, res) => {
 		email: req.body.email,
 		password: req.body.password
 	});
-	res.json({ code: 200 });
+	res.json({
+		code: 200,
+		error: false,
+		message: 'User created.'
+	});
 });
 
 redisConnection.on('ready', () => {

@@ -10,18 +10,26 @@ const getUser = (postEmail) => {
 
 const testPasswordMatch = (req, res, next) => {
 	return getUser(req.query.email).then((result) => {
-		const dbPass = result.dataValues.password;
+		if (result !== null) {
+			const dbPass = result.dataValues.password;
+			const argPass = req.query.password;
 
-		if (req.query.password === dbPass) {
-			console.log('MIDDLEWARE-PASSWORD-MATCH: Correct Password');
-			next();
-		} else {
-			res.json({
-				code: 400,
-				error: true,
-				messge: 'Incorrect password.'
-			});
+			if (argPass === dbPass) {
+				console.log('Correct Password');
+				next();
+			} else {
+				res.json({
+					code: 400,
+					error: true,
+					message: 'Incorrect password.'
+				});
+			}
 		}
+		res.json({
+			code: 400,
+			error: true,
+			message: "Can't find user with this email."
+		});
 	});
 };
 
