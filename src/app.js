@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const { User } = require('./models/user');
-const { redisConnection } = require('./redis-connection');
+const { redisConnection } = require('./models/redis-connection');
 
 // Custom Middleware
 const { inputValidationPOST } = require('./middleware/input-validation-post');

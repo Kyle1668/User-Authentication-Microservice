@@ -1,4 +1,4 @@
-const { redisConnection } = require('../redis-connection');
+const { redisConnection } = require('../models/redis-connection');
 
 const saveJWT = (req, res, next) => {
 	redisConnection

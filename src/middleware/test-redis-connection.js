@@ -1,1 +1,1 @@
-const { redisConnection } = require('../redis-connection');
+const { redisConnection } = require('../models/redis-connection');

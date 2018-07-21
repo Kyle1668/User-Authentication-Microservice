@@ -1,4 +1,4 @@
-const { connection } = require('../db-connection');
+const { connection } = require('../models/db-connection');
 
 const testDBConnection = (req, res, next) => {
 	connection
