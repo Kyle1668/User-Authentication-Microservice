@@ -16,11 +16,12 @@ const port = process.env.PORT || 3000;
 
 // Middleware
 // app.use(bodyParser.urlencoded({ extended: true }));
-app.use('/api', testDBConnection, router);
-app.use('/users', bodyParser.json(), router);
+app.use(bodyParser.json());
+app.use(testDBConnection);
+app.use('/api', router);
 
 // router.use(middleware.inputValidation)
-router.get('/token', bodyParser.json(), inputValidationGET, testPasswordMatch, (req, res) => {
+router.get('/token', inputValidationGET, testPasswordMatch, (req, res) => {
 	jwt.sign({ email: req.query.email }, req.query.password, (jwtErr, jsonToken) => {
 		if (jwtErr) {
 			res.json({
@@ -50,7 +51,7 @@ router.get('/token', bodyParser.json(), inputValidationGET, testPasswordMatch, (
 	});
 });
 
-router.post('/users', bodyParser.json(), inputValidationPOST, (req, res) => {
+router.post('/users', inputValidationPOST, (req, res) => {
 	User.create({
 		email: req.body.email,
 		password: req.body.password
