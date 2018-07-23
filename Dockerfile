@@ -11,5 +11,6 @@ COPY . .
 EXPOSE 8080
 
 ENV PORT=8080
+ENV JWT_EXPIRATION=40
 
 CMD ["npm", "run", "prod"]
