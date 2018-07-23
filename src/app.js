@@ -27,7 +27,7 @@ router.get('/token', inputValidationGET, testPasswordMatch, generateJWT, saveJWT
 	res.json({
 		code: 200,
 		error: false,
-		token: res.locals.token
+		token: res.locals.token 
 	});
 });
 

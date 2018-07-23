@@ -1,6 +1,10 @@
 {
-    "extends": ["airbnb-base", "prettier"],
-    "rules": {
-        "no-console": 0
-    }
+	"extends": [ "airbnb-base", "prettier" ],
+	"env": {
+		"jest": true
+	},
+	"rules": {
+        "no-console": 0,
+        "arrow-body-style": 0
+	}
 }

@@ -1,8 +1,8 @@
 const { redisConnection } = require('../models/redis-connection');
 
-const expiration = process.env.JWT_EXPIRATION || 20;
-
 const saveJWT = (req, res, next) => {
+	const expiration = process.env.JWT_EXPIRATION || 20;
+
 	redisConnection
 		.setAsync(req.query.email, res.locals.token, 'EX', expiration)
 		.then(() => {
