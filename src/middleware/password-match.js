@@ -10,7 +10,7 @@ const getUser = (postEmail) => {
 
 const testPasswordMatch = (req, res, next) => {
 	return getUser(req.query.email).then((result) => {
-		if (result !== null) {
+		if (result) {
 			const dbPass = result.dataValues.password;
 			const argPass = req.query.password;
 
@@ -24,12 +24,13 @@ const testPasswordMatch = (req, res, next) => {
 					message: 'Incorrect password.'
 				});
 			}
+		} else {
+			res.json({
+				code: 400,
+				error: true,
+				message: "Can't find user with this email."
+			});
 		}
-		res.json({
-			code: 400,
-			error: true,
-			message: "Can't find user with this email."
-		});
 	});
 };
 
