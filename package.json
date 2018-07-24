@@ -7,7 +7,8 @@
 		"test": "jest",
 		"lint": "./node_modules/.bin/eslint .",
 		"prod": "node ./src/app.js",
-		"dev": "nodemon ./src/app.js"
+		"dev": "nodemon ./src/app.js",
+		"circleci": "circleci build --job test && circleci build --job lint"
 	},
 	"keywords": [],
 	"author": "",
